@@ -3,7 +3,8 @@ from Skill import Skill
 
 def read_skills() :
     for i in range(len(skills)) :
-        print(f"{i}. {skills[i].name}")
+        print(f"{i + 1}. {skills[i].name}")
+        print(f"Expected damage: {skills[i].get_expected_dmg()}")
 
 sanity = 0
 
@@ -25,5 +26,5 @@ while running :
             read_skills()
         case "3" :
             skill_choice = int(input("Write the skill's number: "))
-            skills[skill_choice - 1].execute_skill(sanity)
+            skills[skill_choice - 1].execute_skill(sanity)  # might wanna prevent errors here
 print("Exiting program.")

@@ -20,7 +20,7 @@ class Skill() :
         print(f"Base Power: {self.base_power}, Coin Power: {self.coin_power}, {self.coins} coins.")
 
         power = self.base_power
-        total = 0
+        damage = 0
 
         for i in range(self.coins) :
             print(f"Coin {i+1} : ", end="")
@@ -38,6 +38,39 @@ class Skill() :
 
             real_power = max(0, int(power.real))
             print(f"{real_power} damage")
-            total += real_power
+            damage += real_power
         
-        print(f"Total {total} damage.")
+        print(f"Total {damage} damage.")
+
+    def get_expected_dmg(self) :
+
+        
+        all_heads_damage = 0
+        all_tails_damage = 0
+
+        power = self.base_power
+        for i in range(self.coins) : # try all heads
+
+            power = (self.operation(power, self.coin_power))
+
+            if power.real < 0 : 
+                    if isinstance(power, int) : power = 0
+
+            real_power = max(0, int(power.real))
+            all_heads_damage += real_power
+
+
+        power = self.base_power
+        for i in range(self.coins) : # try all tails
+
+            real_power = max(0, int(power.real))
+            all_tails_damage += real_power
+
+        if all_heads_damage > all_tails_damage :
+            min_dmg = all_tails_damage
+            max_dmg = all_heads_damage
+        else :
+            min_dmg = all_heads_damage
+            max_dmg = all_tails_damage
+
+        return str(min_dmg) + "-" + str(max_dmg)
